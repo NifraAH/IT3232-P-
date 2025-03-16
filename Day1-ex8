@@ -1,0 +1,66 @@
+import java.util.ArrayList;
+
+class Product {
+    String name;
+    double price;
+    int quantity;
+
+    public Product(String name, double price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public void displayProduct() {
+        System.out.println(name + " - Price: $" + price + ", Quantity: " + quantity);
+    }
+}
+
+class RetailStore {
+    ArrayList<Product> products = new ArrayList<>();
+
+    public void addProduct(String name, double price, int quantity) {
+        products.add(new Product(name, price, quantity));
+    }
+
+    public void editProduct(String name, double newPrice, int newQuantity) {
+        for (Product p : products) {
+            if (p.name.equalsIgnoreCase(name)) {
+                p.price = newPrice;
+                p.quantity = newQuantity;
+                System.out.println(name + " updated successfully.");
+                return;
+            }
+        }
+        System.out.println("Product not found!");
+    }
+
+    public void deleteProduct(String name) {
+        products.removeIf(p -> p.name.equalsIgnoreCase(name));
+        System.out.println(name + " deleted successfully.");
+    }
+
+    public void displayProducts() {
+        System.out.println("Available Products:");
+        for (Product p : products) {
+            p.displayProduct();
+        }
+    }
+}
+
+public class StoreApp {
+    public static void main(String[] args) {
+        RetailStore store = new RetailStore();
+        store.addProduct("Apple", 1.5, 50);
+        store.addProduct("Carrot", 0.8, 100);
+        store.addProduct("Rice", 2.5, 30);
+
+        store.displayProducts();
+
+        store.editProduct("Apple", 1.8, 40);
+        store.displayProducts();
+
+        store.deleteProduct("Carrot");
+        store.displayProducts();
+    }
+}
